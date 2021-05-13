@@ -19,7 +19,7 @@ void signal_handler(int _signal)
 	}
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	struct bme280_dev device;
 
@@ -28,13 +28,19 @@ int main()
 
 	CURL* curl;
 
+	if(argc != 2)
+	{
+		fprintf(stderr, "Missing path to config file");
+		return 1;
+	}
+
 	if (signal(SIGINT, signal_handler) == SIG_ERR) {
 		fprintf(stderr, "Unable to register signal handler\r\n");
 		return 1;
 	}
 
 	// Load and parse configuration
-	config_load(&config);
+	config_load(argv[1], &config);
 
 	if (!config.valid_) {
 		fprintf(stderr, "Unable to load / parse config\r\n");
