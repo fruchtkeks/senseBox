@@ -1,3 +1,6 @@
 [submodule "extern/bme280"]
 	path = extern/bme280
 	url = https://github.com/BoschSensortec/BME280_driver.git
+[submodule "extern/Unity"]
+	path = extern/Unity
+	url = https://github.com/fruchtkeks/Unity
