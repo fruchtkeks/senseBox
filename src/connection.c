@@ -85,22 +85,27 @@ int32_t connection_send(CURL** _curl, const struct config* _config, const struct
 			memset(value, 0, 100);
 
 			switch (sensor) {
-			case kSensorTemperature:
-				strcat(url, _config->temperature_id_);
-				sprintf(value, "%0.2f", _data->temperature_);
-				break;
+				case kSensorTemperature: {
+					strcat(url, _config->temperature_id_);
+					sprintf(value, "%0.2f", _data->temperature_);
+					break;
+				}
 
-			case kSensorHumidity:
-				strcat(url, _config->humidity_id_);
-				sprintf(value, "%0.2f", _data->humidity_);
-				break;
+				case kSensorHumidity: {
+					strcat(url, _config->humidity_id_);
+					sprintf(value, "%0.2f", _data->humidity_);
+					break;
+				}
 
-			case kSensorPressure:
-				strcat(url, _config->pressure_id_);
-				sprintf(value, "%0.2f", _data->pressure_);
-				break;
+				case kSensorPressure: {
+					strcat(url, _config->pressure_id_);
+					sprintf(value, "%0.2f", _data->pressure_);
+					break;
+				}
 
-			default:;
+				default: {
+					fprintf(stderr, "Unknown sensor\r\n");
+				}
 			}
 
 			char body[500];
