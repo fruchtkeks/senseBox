@@ -23,10 +23,8 @@ int32_t connection_init(CURL** _curl);
  * Performs a cleanup of the cURL handler.
  *
  * @param _curl The pointer to the cURL handler.
- *
- * @return Returns 0 on success and 1 on any error.
  */
-int32_t connection_cleanup(CURL** _curl);
+void connection_cleanup(CURL** _curl);
 
 /**
  * Sends the data from the data structure to the openSenseMap API.

@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	CURL* curl;
 
 	if (argc != 2) {
-		fprintf(stderr, "Missing path to config file");
+		fprintf(stderr, "Missing path to config file\r\n");
 		return 1;
 	}
 
@@ -47,7 +47,10 @@ int main(int argc, char* argv[])
 	}
 
 	// Setup network
-	connection_init(&curl);
+	if (connection_init(&curl) != 0) {
+		fprintf(stderr, "Can't initialize cURL handle\r\n");
+		return 1;
+	}
 
 	// Check for sensor
 	sensor_init(&device);
@@ -63,7 +66,9 @@ int main(int argc, char* argv[])
 			   data.pressure_);
 
 		// Send sensor data to server
-		connection_send(&curl, &config, &data);
+		if (connection_send(&curl, &config, &data) != 0) {
+			fprintf(stderr, "Sending of data failed\r\n");
+		}
 
 		// Sleep (60s)
 		usleep(60000000);
