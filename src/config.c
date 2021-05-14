@@ -44,11 +44,9 @@ int32_t config_parse(char* _data, size_t _data_size, struct config* _config)
 {
 	int32_t return_value = 0;
 
-	size_t position = 0;
+	char key[100];
+	char value[100];
 
-	char* key;
-	char* separator;
-	char* value;
 	char* start;
 	char* end;
 
@@ -61,30 +59,8 @@ int32_t config_parse(char* _data, size_t _data_size, struct config* _config)
 
 	start = _data;
 
-	while (position < _data_size) {
-		key = start;
-		separator = strchr(key, '=');
-
-		if (separator == NULL) {
-			fprintf(stderr, "Invalid key/value format in config file\r\n");
-			return_value = 1;
-			break;
-		}
-
-		*separator = 0;
-		value = separator + 1;
-
-		end = strchr(value, '\n');
-
-		if (end == NULL) {
-			fprintf(stderr, "Missing line ending in config file\r\n");
-			return_value = 1;
-			break;
-		}
-
-		*end = 0;
-
-		printf("Key: %s - Value: %s - Length: %i\r\n", key, value, strlen(value));
+	while (sscanf(start, "%100[^=]%*c%100[^\n]%*c", key, value) == 2) {
+		printf("Key: %s - Value: %s\r\n", key, value);
 
 		if (strcmp(key, "api_key") == 0 && strlen(value) == API_KEY_SIZE - 1) {
 			strcpy(_config->api_key_, value);
@@ -103,11 +79,13 @@ int32_t config_parse(char* _data, size_t _data_size, struct config* _config)
 			break;
 		}
 
-		position += strlen(key);
-		position += strlen(value);
-		position += 2;
+		end = strchr(start, '\n');
 
-		start = end + 1;
+		if (end != NULL) {
+			start = end + 1;
+		} else {
+			break;
+		}
 	}
 
 	return return_value;
