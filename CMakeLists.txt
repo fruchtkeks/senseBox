@@ -6,10 +6,6 @@ set(CMAKE_C_STANDARD 99)
 
 find_package(CURL REQUIRED)
 
-include_directories(
-    extern/bme280
-    src
-)
 # Release
 
 add_executable(
@@ -17,11 +13,18 @@ add_executable(
 
     extern/bme280/bme280.c
 
-    src/sensor.c
     src/config.c
+    src/sensor.c
     src/connection.c
 
     src/main.c
+)
+
+target_include_directories(
+    senseBox
+
+    PRIVATE extern/bme280
+    PRIVATE src
 )
 
 target_link_libraries(
