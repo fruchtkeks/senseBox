@@ -19,10 +19,8 @@ jobs:
       with:
         submodules: recursive
     - name: Run CMake
-      run: cmake .
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+      run: cmake -S . -B build
+    - name: Build
+      run: cmake --build build --target Tests
+    - name: Run Tests
+      run: build/Tests
