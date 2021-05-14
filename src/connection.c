@@ -35,16 +35,18 @@ static size_t receive(void* _data, size_t _size, size_t _nmemb, char* _received_
 
 //
 
-void connection_init(CURL** _curl)
+int32_t connection_init(CURL** _curl)
 {
 	curl_global_init(CURL_GLOBAL_ALL);
 	*_curl = curl_easy_init();
+	return 0;
 }
 
-void connection_cleanup(CURL** _curl)
+int32_t connection_cleanup(CURL** _curl)
 {
 	curl_easy_cleanup(*_curl);
 	curl_global_cleanup();
+	return 0;
 }
 
 int32_t connection_send(CURL** _curl, const struct config* _config, const struct data* _data)
