@@ -28,8 +28,7 @@ int main(int argc, char* argv[])
 
 	CURL* curl;
 
-	if(argc != 2)
-	{
+	if (argc != 2) {
 		fprintf(stderr, "Missing path to config file");
 		return 1;
 	}
