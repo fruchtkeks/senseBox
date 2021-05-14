@@ -47,7 +47,10 @@ int main(int argc, char* argv[])
 	}
 
 	// Setup network
-	connection_init(&curl);
+	if (connection_init(&curl) != 0) {
+		fprintf(stderr, "Can't initialize cURL handle\r\n");
+		return 1;
+	}
 
 	// Check for sensor
 	sensor_init(&device);

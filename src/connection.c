@@ -1,6 +1,7 @@
 #include "connection.h"
 
 // C
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -37,8 +38,22 @@ static size_t receive(void* _data, size_t _size, size_t _nmemb, char* _received_
 
 int32_t connection_init(CURL** _curl)
 {
-	curl_global_init(CURL_GLOBAL_ALL);
+	errno = 0;
+
+	if (curl_global_init(CURL_GLOBAL_ALL) != 0) {
+		fprintf(stderr, "curl_global_init failed (%s)\r\n", strerror(errno));
+		return 1;
+	}
+
 	*_curl = curl_easy_init();
+
+	errno = 0;
+
+	if (*_curl == NULL) {
+		fprintf(stderr, "curl_easy_init failed (%s)\r\n", strerror(errno));
+		return 1;
+	}
+
 	return 0;
 }
 
