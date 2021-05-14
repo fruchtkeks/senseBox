@@ -33,13 +33,6 @@ target_link_libraries(
     PRIVATE curl
 )
 
-add_custom_command(
-    TARGET senseBox POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_SOURCE_DIR}/box.config
-    ${CMAKE_CURRENT_BINARY_DIR}/box.config
-)
-
 # Tests
 
 add_executable(
