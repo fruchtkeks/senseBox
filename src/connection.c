@@ -65,6 +65,8 @@ void connection_cleanup(CURL** _curl)
 
 int32_t connection_send(CURL** _curl, const struct config* _config, const struct data* _data)
 {
+	int32_t return_value = 0;
+
 	CURLcode result;
 
 	if (*_curl) {
@@ -147,6 +149,7 @@ int32_t connection_send(CURL** _curl, const struct config* _config, const struct
 
 			if (result != CURLE_OK) {
 				fprintf(stderr, "curl_easy_perform() failed: %s\r\n", curl_easy_strerror(result));
+				return_value = 1;
 				break;
 			}
 		}
@@ -154,5 +157,5 @@ int32_t connection_send(CURL** _curl, const struct config* _config, const struct
 		curl_slist_free_all(headers);
 	}
 
-	return 0;
+	return return_value;
 }
