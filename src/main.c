@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 	}
 
 	// Load and parse configuration
-	config_load(argv[1], &config);
+	config_parseFromFile(argv[1], &config);
 
 	if (!config.valid_) {
 		fprintf(stderr, "Unable to load / parse config\r\n");
