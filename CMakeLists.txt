@@ -10,6 +10,7 @@ include_directories(
     extern/bme280
     src
 )
+# Release
 
 add_executable(
     senseBox
@@ -34,4 +35,33 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_SOURCE_DIR}/box.config
     ${CMAKE_CURRENT_BINARY_DIR}/box.config
+)
+
+# Tests
+
+add_executable(
+    Tests
+
+    extern/Unity/src/unity.c
+    extern/Unity/extras/fixture/src/unity_fixture.c
+    extern/Unity/extras/memory/src/unity_memory.c
+
+    extern/bme280/bme280.c
+
+    src/config.c
+
+    test/config_test.c
+
+    test/main_test.c
+)
+
+target_include_directories(
+    Tests
+
+    PRIVATE extern/Unity/src
+    PRIVATE extern/Unity/extras/fixture/src
+    PRIVATE extern/Unity/extras/memory/src
+    PRIVATE extern/bme280
+    PRIVATE src
+    PRIVATE test
 )
