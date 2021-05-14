@@ -20,10 +20,14 @@ enum {
 struct config {
 	bool valid_;
 
+	bool api_key_valid_;
+	bool box_id_valid_;
+	bool temperature_id_valid_;
+	bool humidity_id_valid_;
+	bool pressure_id_valid_;
+
 	char api_key_[API_KEY_SIZE];
-
 	char box_id_[BOX_ID_SIZE];
-
 	char temperature_id_[SENSOR_ID_SIZE];
 	char humidity_id_[SENSOR_ID_SIZE];
 	char pressure_id_[SENSOR_ID_SIZE];
