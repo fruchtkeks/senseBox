@@ -57,11 +57,10 @@ int32_t connection_init(CURL** _curl)
 	return 0;
 }
 
-int32_t connection_cleanup(CURL** _curl)
+void connection_cleanup(CURL** _curl)
 {
 	curl_easy_cleanup(*_curl);
 	curl_global_cleanup();
-	return 0;
 }
 
 int32_t connection_send(CURL** _curl, const struct config* _config, const struct data* _data)
