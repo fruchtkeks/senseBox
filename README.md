@@ -1,5 +1,10 @@
 # senseBox
 
+[![build](https://github.com/fruchtkeks/senseBox/actions/workflows/build.yml/badge.svg)](https://github.com/fruchtkeks/senseBox/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/fruchtkeks/senseBox/branch/main/graph/badge.svg?token=ROEHUI8Y9R)](https://codecov.io/gh/fruchtkeks/senseBox)
+
+## Overview
+
 With the senseBox application, you can read environmental data (temperature, humidity, and pressure) from a Bosch BME280 sensor and transmit this data to the openSenseMap project. The app is meant to run on a Raspberry Pi where the BME280 is connected to the Pis I2C interface.
 
 ## Compile / Install
