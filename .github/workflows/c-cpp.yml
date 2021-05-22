@@ -8,13 +8,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Install Dependencies
       run: sudo apt-get install -y libcurl4-openssl-dev gcovr
-    - name: Checkout repository and submodules
+    - name: Checkout Repository and Submodules
       uses: actions/checkout@v2
       with:
         submodules: recursive
@@ -25,7 +23,7 @@ jobs:
     - name: Run Tests
       run: build/Tests
     - name: Create Coverage Report
-      run: gcovr --xml --output coverage.xml --root ../src .
+      run: gcovr --xml --output coverage.xml --root src build
     - name: Upload Coverage Report
       uses: codecov/codecov-action@v1
       with:
