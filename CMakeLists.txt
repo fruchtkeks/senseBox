@@ -45,6 +45,8 @@ add_executable(
     extern/bme280/bme280.c
 
     src/config.c
+    src/sensor.c
+    src/connection.c
 
     test/config_test.c
 
@@ -60,4 +62,17 @@ target_include_directories(
     PRIVATE extern/bme280
     PRIVATE src
     PRIVATE test
+)
+
+target_compile_options(
+    Tests
+
+    PRIVATE --coverage
+)
+
+target_link_libraries(
+    Tests
+
+    PRIVATE gcov
+    PRIVATE curl
 )
