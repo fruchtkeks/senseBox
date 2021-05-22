@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install libcurl
-      run: sudo apt-get install -y libcurl4-openssl-dev
+    - name: Install Dependencies
+      run: sudo apt-get install -y libcurl4-openssl-dev gcovr
     - name: Checkout repository and submodules
       uses: actions/checkout@v2
       with:
@@ -24,3 +24,10 @@ jobs:
       run: cmake --build build --target Tests
     - name: Run Tests
       run: build/Tests
+    - name: Create Coverage Report
+      run: gcovr --xml --output coverage.xml --root ../src .
+    - name: Upload Coverage Report
+      uses: codecov/codecov-action@v1
+      with:
+        files: coverage.xml
+        verbose: true
