@@ -16,6 +16,7 @@ add_executable(
     src/config.c
     src/sensor.c
     src/connection.c
+    src/tools.c
 
     src/main.c
 )
@@ -47,8 +48,10 @@ add_executable(
     src/config.c
     src/sensor.c
     src/connection.c
+    src/tools.c
 
     test/config_test.c
+    test/tools_test.c
 
     test/main_test.c
 )
