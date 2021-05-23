@@ -24,9 +24,11 @@ int main(int argc, char* argv[])
 	struct bme280_dev device;
 
 	struct config config;
+	struct measurements measurements;
 	struct data data;
 
-	CURL* curl;
+	CURL* curl = NULL;
+	struct curl_slist* headers = NULL;
 
 	if (argc != 2) {
 		fprintf(stderr, "Missing path to config file\r\n");
@@ -52,6 +54,12 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	// Init cURL headers
+	if (connection_initHeaders(&headers, config.api_key_) != 0) {
+		fprintf(stderr, "Can't initialize the cURL header structure\r\n");
+		return 1;
+	}
+
 	// Check for sensor
 	sensor_init(&device);
 
@@ -59,21 +67,30 @@ int main(int argc, char* argv[])
 
 	while (!terminate) {
 		// Read and process data from sensor
-		sensor_read(&device, &data);
+		sensor_read(&device, &measurements);
 
 		// Print data
-		printf("Temp.: %0.2f °C - Hum.: %0.2f - Pressure: %0.2f hPa\r\n", data.temperature_, data.humidity_,
-			   data.pressure_);
+		printf("Temp.: %0.2f °C - Hum.: %0.2f - Pressure: %0.2f hPa\r\n", measurements.temperature_,
+			   measurements.humidity_, measurements.pressure_);
 
-		// Send sensor data to server
-		if (connection_send(&curl, &config, &data) != 0) {
-			fprintf(stderr, "Sending of data failed\r\n");
+		// Send measurements to openSenseMap
+		for (size_t sensor = 0; sensor < kSensorSize; ++sensor) {
+			if (connection_prepare(&config, &measurements, sensor, &data) != 0) {
+				fprintf(stderr, "Preparing of data failed\r\n");
+				continue;
+			}
+
+			if (connection_send(&curl, (const struct curl_slist**)&headers, &data) != 0) {
+				fprintf(stderr, "Sending of data failed\r\n");
+			}
 		}
 
 		// Sleep (60s)
 		usleep(60000000);
 	}
 
+	// Clean up cURL headers and cURL object
+	connection_cleanupHeaders(&headers);
 	connection_cleanup(&curl);
 
 	return 0;

@@ -9,6 +9,9 @@
 #define BOX_ID_SIZE 25
 #define SENSOR_ID_SIZE 25
 
+#define URL_SIZE 200
+#define BODY_SIZE 1000
+
 enum {
 	kSensorTemperature = 0,
 	kSensorHumidity,
@@ -33,12 +36,17 @@ struct config {
 	char pressure_id_[SENSOR_ID_SIZE];
 };
 
-struct data {
+struct measurements {
 	bool valid_;
 
 	double_t temperature_;
 	double_t humidity_;
 	double_t pressure_;
+};
+
+struct data {
+	char url_[URL_SIZE];
+	char body_[BODY_SIZE];
 };
 
 #endif
