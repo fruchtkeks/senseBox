@@ -104,9 +104,9 @@ int32_t config_parse(char* _data, size_t _data_size, struct config* _config)
 
 	// The API-Key and the Box-ID must be set for the config to be valid
 
-	if(!_config->api_key_valid_) {
+	if (!_config->api_key_valid_) {
 		fprintf(stderr, "API-Key not found\r\n");
-	} else if(!_config->box_id_valid_) {
+	} else if (!_config->box_id_valid_) {
 		fprintf(stderr, "Box-ID not found\r\n");
 	} else {
 		_config->valid_ = true;
