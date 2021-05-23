@@ -64,6 +64,7 @@ int32_t connection_init(CURL** _curl)
 void connection_cleanup(CURL** _curl)
 {
 	curl_easy_cleanup(*_curl);
+	*_curl = NULL;
 	curl_global_cleanup();
 }
 
@@ -90,6 +91,8 @@ void connection_cleanupHeaders(struct curl_slist** _headers)
 	if (*_headers != NULL) {
 		curl_slist_free_all(*_headers);
 	}
+
+	*_headers = NULL;
 }
 
 int32_t connection_prepare(const struct config* _config, const struct measurements* _measurements, const size_t _sensor,
