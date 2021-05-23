@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
 	struct bme280_dev device;
 
 	struct config config;
+	struct measurements measurements;
 	struct data data;
 
 	CURL* curl;
@@ -59,7 +60,7 @@ int main(int argc, char* argv[])
 
 	while (!terminate) {
 		// Read and process data from sensor
-		sensor_read(&device, &data);
+		sensor_read(&device, &measurements);
 
 		// Print data
 		printf("Temp.: %0.2f °C - Hum.: %0.2f - Pressure: %0.2f hPa\r\n", data.temperature_, data.humidity_,

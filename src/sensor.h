@@ -28,6 +28,6 @@ int32_t sensor_init(struct bme280_dev* _device);
  *
  * @return Returns 0 on success and 1 on any error.
  */
-int32_t sensor_read(struct bme280_dev* _device, struct data* _data);
+int32_t sensor_read(struct bme280_dev* _device, struct measurements* _measurements);
 
 #endif

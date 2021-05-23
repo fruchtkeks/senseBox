@@ -132,7 +132,7 @@ int32_t sensor_init(struct bme280_dev* _device)
 	return 0;
 }
 
-int32_t sensor_read(struct bme280_dev* _device, struct data* _data)
+int32_t sensor_read(struct bme280_dev* _device, struct measurements* _measurements)
 {
 	int8_t result = 0;
 
@@ -140,10 +140,10 @@ int32_t sensor_read(struct bme280_dev* _device, struct data* _data)
 
 	struct bme280_data computed_data;
 
-	_data->valid_ = false;
-	_data->temperature_ = 0;
-	_data->humidity_ = 0;
-	_data->pressure_ = 0;
+	_measurements->valid_ = false;
+	_measurements->temperature_ = 0;
+	_measurements->humidity_ = 0;
+	_measurements->pressure_ = 0;
 
 	result = bme280_set_sensor_mode(BME280_FORCED_MODE, _device);
 
@@ -160,10 +160,10 @@ int32_t sensor_read(struct bme280_dev* _device, struct data* _data)
 		return 1;
 	}
 
-	_data->valid_ = true;
-	_data->temperature_ = computed_data.temperature;
-	_data->humidity_ = computed_data.humidity;
-	_data->pressure_ = computed_data.pressure / 100.0;
+	_measurements->valid_ = true;
+	_measurements->temperature_ = computed_data.temperature;
+	_measurements->humidity_ = computed_data.humidity;
+	_measurements->pressure_ = computed_data.pressure / 100.0;
 
 	return 0;
 }
