@@ -57,6 +57,12 @@ add_executable(
     test/main_test.c
 )
 
+target_compile_definitions(
+    Tests
+
+    PRIVATE TESTS=1
+)
+
 target_include_directories(
     Tests
 
