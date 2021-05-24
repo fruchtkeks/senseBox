@@ -51,6 +51,7 @@ add_executable(
     src/tools.c
 
     test/config_test.c
+    test/sensor_test.c
     test/connection_test.c
     test/tools_test.c
 
