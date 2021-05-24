@@ -97,6 +97,18 @@ static int8_t user_i2c_write(uint8_t _register_address, const uint8_t* _data, ui
 
 static void user_delay_us(uint32_t _period, void* _intf_ptr) { usleep(_period); }
 
+// Tests
+
+static int8_t sensor_dummy_read(uint8_t _register_address, uint8_t* _data, uint32_t _data_length, void* _intf_ptr)
+{
+	return 1;
+}
+
+static int8_t sensor_dummy_write(uint8_t _register_address, const uint8_t* _data, uint32_t _data_length, void* _intf_ptr)
+{
+	return 1;
+}
+
 //
 
 int32_t sensor_init(struct bme280_dev* _device)
@@ -104,8 +116,15 @@ int32_t sensor_init(struct bme280_dev* _device)
 	int8_t result = 0;
 
 	_device->intf = BME280_I2C_INTF;
+
+#if TESTS
+	_device->read = sensor_dummy_read;
+	_device->write = sensor_dummy_write;
+#else
 	_device->read = user_i2c_read;
 	_device->write = user_i2c_write;
+#endif
+
 	_device->delay_us = user_delay_us;
 
 	result = bme280_init(_device);
