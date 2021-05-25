@@ -49,4 +49,9 @@ struct data {
 	char body_[BODY_SIZE];
 };
 
+struct response {
+	size_t size_;
+	char* data_;
+};
+
 #endif
