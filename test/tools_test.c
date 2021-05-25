@@ -39,4 +39,6 @@ TEST(tools, AppendData)
 
 	TEST_ASSERT(tools_appendData((void*)data, 5, 1, (void*)&response) == 5);
 	TEST_ASSERT(response.size_ == 5);
+	TEST_ASSERT(tools_appendData((void*)data, 5, 1, (void*)&response) == 5);
+	TEST_ASSERT(response.size_ == 10);
 }
