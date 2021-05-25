@@ -18,7 +18,11 @@ TEST_GROUP_RUNNER(connection)
 	RUN_TEST_CASE(connection, PrepareData);
 }
 
-TEST_GROUP_RUNNER(tools) { RUN_TEST_CASE(tools, Append); }
+TEST_GROUP_RUNNER(tools)
+{
+	RUN_TEST_CASE(tools, AppendString);
+	RUN_TEST_CASE(tools, AppendData);
+}
 
 static void run_tests(void)
 {

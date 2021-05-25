@@ -6,6 +6,7 @@
 #include "unity_fixture.h"
 
 // Internal
+#include "common.h"
 #include "tools.h"
 
 TEST_GROUP(tools);
@@ -25,4 +26,14 @@ TEST(tools, AppendString)
 	TEST_ASSERT(strlen(buffer) == 9);
 	TEST_ASSERT(tools_appendString(buffer, "j", 10) == 1);
 	TEST_ASSERT(strlen(buffer) == 9);
+}
+
+TEST(tools, AppendData)
+{
+	struct response response;
+
+	const char* data = "abcde";
+
+	TEST_ASSERT(tools_appendData((void*)data, 5, 1, (void*)&response) == 5);
+	TEST_ASSERT(response.size_ == 5);
 }

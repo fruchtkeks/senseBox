@@ -16,4 +16,18 @@
  */
 int32_t tools_appendString(char* _destination, const char* _source, size_t _destination_size);
 
+/**
+ * Appends the received data to the data buffer.
+ *
+ * @info (Re-) Allocates the buffer for storing the data.
+ *
+ * @param _input The received data, that will be stored.
+ * @param _size The size of the received data.
+ * @param _nmemb Received data member count.
+ * @param _output The buffer, where the data is stored.
+ *
+ * @return The number of bytes, that have been stored in the data buffer.
+ */
+size_t tools_appendData(char* _input, size_t _size, size_t _nmemb, void* _output);
+
 #endif
