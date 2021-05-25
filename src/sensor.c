@@ -104,7 +104,8 @@ static int8_t sensor_dummy_read(uint8_t _register_address, uint8_t* _data, uint3
 	return 1;
 }
 
-static int8_t sensor_dummy_write(uint8_t _register_address, const uint8_t* _data, uint32_t _data_length, void* _intf_ptr)
+static int8_t sensor_dummy_write(uint8_t _register_address, const uint8_t* _data, uint32_t _data_length,
+								 void* _intf_ptr)
 {
 	return 1;
 }
