@@ -32,6 +32,9 @@ TEST(tools, AppendData)
 {
 	struct response response;
 
+	response.size_ = 0;
+	response.data_ = NULL;
+
 	const char* data = "abcde";
 
 	TEST_ASSERT(tools_appendData((void*)data, 5, 1, (void*)&response) == 5);
