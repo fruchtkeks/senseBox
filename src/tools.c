@@ -3,7 +3,7 @@
 // C
 #include <stdio.h>
 
-int32_t tools_append(char* _destination, const char* _source, size_t _destination_size)
+int32_t tools_appendString(char* _destination, const char* _source, size_t _destination_size)
 {
 	size_t destination_length = strlen(_destination);
 	size_t source_length = strlen(_source);

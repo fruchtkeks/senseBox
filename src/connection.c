@@ -77,8 +77,8 @@ int32_t connection_initHeaders(struct curl_slist** _headers, const char* _api_ke
 	char auth[kAuthHeaderSize];
 	memset(auth, 0, kAuthHeaderSize);
 
-	tools_append(auth, "Authorization:", kAuthHeaderSize);
-	tools_append(auth, _api_key, kAuthHeaderSize);
+	tools_appendString(auth, "Authorization:", kAuthHeaderSize);
+	tools_appendString(auth, _api_key, kAuthHeaderSize);
 
 	*_headers = curl_slist_append(*_headers, auth);
 	*_headers = curl_slist_append(*_headers, "Content-Type: application/json");
@@ -101,28 +101,28 @@ int32_t connection_prepare(const struct config* _config, const struct measuremen
 	memset(_data->url_, 0, URL_SIZE);
 	memset(_data->body_, 0, BODY_SIZE);
 
-	tools_append(_data->url_, kBaseUrl, URL_SIZE);
-	tools_append(_data->url_, _config->box_id_, URL_SIZE);
-	tools_append(_data->url_, "/", URL_SIZE);
+	tools_appendString(_data->url_, kBaseUrl, URL_SIZE);
+	tools_appendString(_data->url_, _config->box_id_, URL_SIZE);
+	tools_appendString(_data->url_, "/", URL_SIZE);
 
 	char value[20];
 	memset(value, 0, 20);
 
 	switch (_sensor) {
 		case kSensorTemperature: {
-			tools_append(_data->url_, _config->temperature_id_, URL_SIZE);
+			tools_appendString(_data->url_, _config->temperature_id_, URL_SIZE);
 			snprintf(value, 20, "%0.2f", _measurements->temperature_);
 			break;
 		}
 
 		case kSensorHumidity: {
-			tools_append(_data->url_, _config->humidity_id_, URL_SIZE);
+			tools_appendString(_data->url_, _config->humidity_id_, URL_SIZE);
 			snprintf(value, 20, "%0.2f", _measurements->humidity_);
 			break;
 		}
 
 		case kSensorPressure: {
-			tools_append(_data->url_, _config->pressure_id_, URL_SIZE);
+			tools_appendString(_data->url_, _config->pressure_id_, URL_SIZE);
 			snprintf(value, 20, "%0.2f", _measurements->pressure_);
 			break;
 		}
@@ -133,9 +133,9 @@ int32_t connection_prepare(const struct config* _config, const struct measuremen
 		}
 	}
 
-	tools_append(_data->body_, "{\"value\":", BODY_SIZE);
-	tools_append(_data->body_, value, BODY_SIZE);
-	tools_append(_data->body_, "}", BODY_SIZE);
+	tools_appendString(_data->body_, "{\"value\":", BODY_SIZE);
+	tools_appendString(_data->body_, value, BODY_SIZE);
+	tools_appendString(_data->body_, "}", BODY_SIZE);
 
 	printf("URL: %s\r\n", _data->url_);
 	printf("Body: %s\r\n", _data->body_);
