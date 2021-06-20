@@ -137,9 +137,9 @@ int32_t sensor_init(struct bme280_dev* _device)
 
 	uint8_t sensor_select = BME280_OSR_TEMP_SEL | BME280_OSR_HUM_SEL | BME280_OSR_PRESS_SEL | BME280_FILTER_SEL;
 
+	_device->settings.osr_t = BME280_OVERSAMPLING_2X;
 	_device->settings.osr_h = BME280_OVERSAMPLING_1X;
 	_device->settings.osr_p = BME280_OVERSAMPLING_16X;
-	_device->settings.osr_t = BME280_OVERSAMPLING_2X;
 	_device->settings.filter = BME280_FILTER_COEFF_16;
 
 	result = bme280_set_sensor_settings(sensor_select, _device);
