@@ -149,7 +149,7 @@ int32_t sensor_init(struct bme280_dev* _device, uint32_t* _delay_in_us)
 		return 1;
 	}
 
-	*_delay_in_us = bme280_cal_meas_delay(&_device->settings);
+	*_delay_in_us = bme280_cal_meas_delay(&_device->settings) * 1000;
 
 	return 0;
 }
