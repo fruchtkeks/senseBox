@@ -74,6 +74,7 @@ int main(int argc, char* argv[])
 			   measurements.humidity_, measurements.pressure_);
 
 		// Send measurements to openSenseMap
+#if SEND_DATA
 		for (size_t sensor = 0; sensor < kSensorSize; ++sensor) {
 			if (connection_prepare(&config, &measurements, sensor, &data) != 0) {
 				fprintf(stderr, "Preparing of data failed\r\n");
@@ -84,9 +85,15 @@ int main(int argc, char* argv[])
 				fprintf(stderr, "Sending of data failed\r\n");
 			}
 		}
+#endif
 
+#if SHORT_SLEEP
+		// Sleep (5s)
+		usleep(5000000);
+#else
 		// Sleep (60s)
 		usleep(60000000);
+#endif
 	}
 
 	// Clean up cURL headers and cURL object

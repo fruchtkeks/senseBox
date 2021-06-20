@@ -21,6 +21,13 @@ add_executable(
     src/main.c
 )
 
+target_compile_definitions(
+    senseBox
+
+    PRIVATE SEND_DATA=1
+    PRIVATE SHORT_SLEEP=0
+)
+
 target_include_directories(
     senseBox
 

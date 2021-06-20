@@ -30,7 +30,7 @@ static int8_t user_i2c_read(uint8_t _register_address, uint8_t* _data, uint32_t 
 
 	messages[0].addr = (uint16_t)BME280_I2C_ADDR_PRIM;
 	messages[0].flags = 0;
-	messages[0].len = 2;
+	messages[0].len = 1;
 	messages[0].buf = &_register_address;
 
 	messages[1].addr = (uint16_t)BME280_I2C_ADDR_PRIM;
@@ -67,7 +67,7 @@ static int8_t user_i2c_write(uint8_t _register_address, const uint8_t* _data, ui
 	struct i2c_rdwr_ioctl_data message_set[1];
 	struct i2c_msg messages[1];
 
-	uint8_t payload[2 + _data_length];
+	uint8_t payload[1 + _data_length];
 
 	payload[0] = _register_address;
 
@@ -77,7 +77,7 @@ static int8_t user_i2c_write(uint8_t _register_address, const uint8_t* _data, ui
 
 	messages[0].addr = (uint16_t)BME280_I2C_ADDR_PRIM;
 	messages[0].flags = 0;
-	messages[0].len = _data_length;
+	messages[0].len = 1 + _data_length;
 	messages[0].buf = payload;
 
 	message_set[0].msgs = messages;
@@ -137,9 +137,9 @@ int32_t sensor_init(struct bme280_dev* _device)
 
 	uint8_t sensor_select = BME280_OSR_TEMP_SEL | BME280_OSR_HUM_SEL | BME280_OSR_PRESS_SEL | BME280_FILTER_SEL;
 
+	_device->settings.osr_t = BME280_OVERSAMPLING_2X;
 	_device->settings.osr_h = BME280_OVERSAMPLING_1X;
 	_device->settings.osr_p = BME280_OVERSAMPLING_16X;
-	_device->settings.osr_t = BME280_OVERSAMPLING_2X;
 	_device->settings.filter = BME280_FILTER_COEFF_16;
 
 	result = bme280_set_sensor_settings(sensor_select, _device);
