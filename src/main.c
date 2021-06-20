@@ -22,6 +22,7 @@ void signal_handler(int _signal)
 int main(int argc, char* argv[])
 {
 	struct bme280_dev device;
+	uint32_t delay_in_us = 0;
 
 	struct config config;
 	struct measurements measurements;
@@ -61,13 +62,13 @@ int main(int argc, char* argv[])
 	}
 
 	// Check for sensor
-	sensor_init(&device);
+	sensor_init(&device, &delay_in_us);
 
 	printf("ID: 0x%X\r\n", device.chip_id);
 
 	while (!terminate) {
 		// Read and process data from sensor
-		sensor_read(&device, &measurements);
+		sensor_read(&device, &measurements, delay_in_us);
 
 		// Print data
 		printf("Temp.: %0.2f °C - Hum.: %0.2f - Pressure: %0.2f hPa\r\n", measurements.temperature_,
