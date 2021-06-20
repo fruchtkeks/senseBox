@@ -87,8 +87,13 @@ int main(int argc, char* argv[])
 		}
 #endif
 
+#if SHORT_SLEEP
+		// Sleep (5s)
+		usleep(5000000);
+#else
 		// Sleep (60s)
 		usleep(60000000);
+#endif
 	}
 
 	// Clean up cURL headers and cURL object
