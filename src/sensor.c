@@ -112,7 +112,7 @@ static int8_t sensor_dummy_write(uint8_t _register_address, const uint8_t* _data
 
 //
 
-int32_t sensor_init(struct bme280_dev* _device)
+int32_t sensor_init(struct bme280_dev* _device, uint32_t* _delay_in_us)
 {
 	int8_t result = 0;
 
@@ -149,14 +149,14 @@ int32_t sensor_init(struct bme280_dev* _device)
 		return 1;
 	}
 
+	*_delay_in_us = bme280_cal_meas_delay(&_device->settings) * 1000;
+
 	return 0;
 }
 
-int32_t sensor_read(struct bme280_dev* _device, struct measurements* _measurements)
+int32_t sensor_read(struct bme280_dev* _device, struct measurements* _measurements, const uint32_t _delay_in_us)
 {
 	int8_t result = 0;
-
-	uint32_t delay = bme280_cal_meas_delay(&_device->settings);
 
 	struct bme280_data computed_data;
 
@@ -172,7 +172,7 @@ int32_t sensor_read(struct bme280_dev* _device, struct measurements* _measuremen
 		return 1;
 	}
 
-	_device->delay_us(delay, _device->intf_ptr);
+	_device->delay_us(_delay_in_us, _device->intf_ptr);
 	result = bme280_get_sensor_data(BME280_ALL, &computed_data, _device);
 
 	if (result != 0) {
